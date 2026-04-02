@@ -11,14 +11,12 @@ fn main() {
             return;
         }
     };
-    // let file_result = "tmp_result";
     let file_tmp_result = "file_tmp_result";
 
     let resultats = [
         utils::utils::utils(file_tmp_result).map_err(|e| format!("[utils] {}", e)),
         execute::execute::execute(&chemin_dossier, file_tmp_result).map_err(|e| format!("[execute] {}", e)),
     ];
-    // println!("\nDossier crée pour les bonnes images: \n{}\n", file_result);
     println!("\nDossier crée pour les images à jeter: \n{}\n", file_tmp_result);
 
     let erreurs: Vec<_> = resultats.iter()
