@@ -4,12 +4,20 @@ use std::path::Path;
 const THRESHOLD: u32 = 5;
 
 pub fn sont_identiques(path1: &Path, path2: &Path) -> bool {
+    println!("Comparaison des fichiers {:?} et {:?}", path1.file_name().unwrap(), path2.file_name().unwrap());
     let h1 = hash(path1).ok();
     let h2 = hash(path2).ok();
-    
+
     match (h1, h2) {
-        (Some(a), Some(b)) => (a ^ b).count_ones() <= THRESHOLD,
-        _ => false,
+        (Some(a), Some(b)) => {
+            let distance = (a ^ b).count_ones();
+            println!("Distance de Hamming: {} (seuil: {})", distance, THRESHOLD);
+            distance <= THRESHOLD
+        },
+        _ => {
+            println!("Erreur lors du calcul des hachages pour {:?} ou {:?}", path1.file_name().unwrap(), path2.file_name().unwrap());
+            false
+        },
     }
 }
 

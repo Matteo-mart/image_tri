@@ -22,8 +22,12 @@ pub fn execute(chemin_dossier: &str, file_tmp_result: &str) -> Result<(), Box<dy
         println!("Comparaison de l'image {:?}", a.file_name().unwrap());
         for b in &images[i + 1..] {
             if hasher::sont_identiques(a, b) {
-                println!("Doublon détecté: {:?} == {:?}", a.file_name().unwrap(), b.file_name().unwrap());
-                doublons.push(b);
+                println!("Doublon détecté: {:?} == {:?}", a, b);
+                if !doublons.contains(&b) {
+                    doublons.push(b);
+                } else {
+                    println!("Doublon déjà ajouté: {:?}", b);
+                }
             }
         }
     }
